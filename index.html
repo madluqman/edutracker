@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AinaEducation | Rekod Pengurusan Murid</title>
+
+<style>
+:root {
+  --primary: #3157d5;
+  --dark: #172554;
+  --bg: #f5f7fb;
+  --white: #ffffff;
+  --text: #202b3c;
+  --muted: #738096;
+  --border: #e3e8f0;
+  --green: #0b966b;
+  --red: #d94343;
+}
+
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 245px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--dark);
+  color: white;
+  padding: 25px 17px;
+}
+
+.brand {
+  font-size: 23px;
+  font-weight: bold;
+  margin: 0 0 35px;
+}
+
+.brand span { color: #91a7ff; }
+
+.nav-label {
+  color: #9baedb;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin: 20px 10px 10px;
+}
+
+.nav button {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #dce5ff;
+  text-align: left;
+  padding: 13px;
+  margin-bottom: 5px;
+  border-radius: 9px;
+}
+
+.nav button:hover,
+.nav button.active {
+  background: #304174;
+  color: white;
+}
+
+main { min-width: 0; }
+
+.topbar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 18px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar small { color: var(--muted); }
+
+.content {
+  max-width: 1450px;
+  padding: 30px;
+  margin: auto;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.heading h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.heading p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.btn {
+  padding: 11px 15px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: white;
+  color: var(--text);
+  font-weight: bold;
+}
+
+.btn.primary {
+  color: white;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn.danger { color: var(--red); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat, .panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 5px 18px #17255408;
+}
+
+.stat { padding: 20px; }
+
+.stat p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.stat h2 {
+  font-size: 30px;
+  margin: 12px 0 0;
+}
+
+.panel { margin-bottom: 22px; overflow: hidden; }
+
+.panel-header {
+  padding: 19px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.panel-header h3 { margin: 0; font-size: 17px; }
+
+.panel-body { padding: 22px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field.full { grid-column: 1 / -1; }
+
+.field label {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.field input, .field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d8dfeb;
+  border-radius: 8px;
+  background: white;
+  outline-color: var(--primary);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  border: 0;
+  background: #f1f4fa;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.tab.active {
+  background: #e9eeff;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.toolbar input, .toolbar select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+}
+
+.toolbar input { min-width: 200px; }
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+th {
+  background: #f9faff;
+  color: var(--muted);
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 14px;
+}
+
+td {
+  padding: 13px 14px;
+  border-top: 1px solid #edf0f5;
+  font-size: 13px;
+}
+
+.student {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student img {
+  width: 43px;
+  height: 43px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #edf1fb;
+}
+
+.student strong { display: block; }
+
+.score {
+  background: #e5f8ef;
+  color: #087b50;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+.actions { display: flex; gap: 5px; }
+
+.actions button {
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 7px;
+  padding: 7px 9px;
+}
+
+.empty {
+  padding: 35px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.hidden { display: none !important; }
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: #101828aa;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.modal {
+  background: white;
+  border-radius: 15px;
+  width: min(600px, 100%);
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+.modal-head, .modal-foot {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-head { border-bottom: 1px solid var(--border); }
+.modal-head h3 { margin: 0; }
+.modal-body { padding: 22px; display: grid; gap: 16px; }
+.modal-foot { justify-content: flex-end; }
+
+.notice {
+  background: #fff8e7;
+  border: 1px solid #f1dfad;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #775a12;
+  margin-bottom: 22px;
+}
+
+.documents {
+  display: grid;
+  gap: 12px;
+}
+
+.document {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 20px;
+}
+
+@media(max-width:1000px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .layout { grid-template-columns: 210px 1fr; }
+  .content { padding: 22px 18px; }
+}
+
+@media(max-width:700px) {
+  .layout { display: block; }
+  .sidebar { padding: 15px; }
+  .brand { margin-bottom: 15px; }
+  .nav { display: flex; overflow-x: auto; gap: 5px; }
+  .nav button { width: auto; white-space: nowrap; }
+  .nav-label { display: none; }
+  .topbar { padding: 14px; }
+  .content { padding: 20px 12px; }
+  .heading { align-items: flex-start; flex-direction: column; }
+  .heading h1 { font-size: 24px; }
+  .stats { gap: 9px; }
+  .stat { padding: 13px; }
+  .stat h2 { font-size: 25px; }
+  .grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .panel-header { padding: 15px; flex-wrap: wrap; }
+  .panel-body { padding: 15px; }
+  .toolbar { width: 100%; }
+  .toolbar input { min-width: 0; width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="brand">Edu<span>Track</span></div>
+  <div class="nav-label">MENU UTAMA</div>
+  <nav class="nav">
+    <button class="active" data-view="dashboard">▦ Dashboard</button>
+    <button data-view="students">♙ Maklumat Murid</button>
+    <button data-view="documents">▤ Dokumen PDF</button>
+    <button data-view="teacher">⚙ Profil Guru & Sekolah</button>
+  </nav>
+</aside>
+
+<main>
+<header class="topbar">
+  <strong id="schoolHeader">Sistem Pengurusan Murid</strong>
+  <small id="teacherHeader">Profil guru</small>
+</header>
+
+<div class="content">
+
+<section id="view-dashboard">
+  <div class="heading">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Selamat datang ke sistem pengurusan murid.</p>
+    </div>
+    <button class="btn primary" onclick="openStudent()">+ Tambah Murid</button>
+  </div>
+
+  <div class="notice">
+    Rekod sensitif tidak digalakan untuk disimpan dalam website ini!
+  </div>
+
+  <div class="stats">
+    <div class="stat"><p>Jumlah Murid</p><h2 id="total">0</h2></div>
+    <div class="stat"><p>Murid Tahap 1</p><h2 id="total1">0</h2></div>
+    <div class="stat"><p>Murid Tahap 2</p><h2 id="total2">0</h2></div>
+    <div class="stat"><p>Dokumen PDF</p><h2 id="totalPdf">0</h2></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Maklumat Guru & Sekolah</h3>
+      <button class="btn" onclick="showView('teacher')">Kemaskini</button>
+    </div>
+    <div class="panel-body grid">
+      <div><p>Nama Guru</p><strong id="dashTeacher">Belum diisi</strong></div>
+      <div><p>Nama Sekolah</p><strong id="dashSchool">Belum diisi</strong></div>
+      <div><p>Jawatan / Opsyen</p><strong id="dashRole">-</strong></div>
+      <div><p>Sesi Persekolahan</p><strong id="dashSession">2026</strong></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header"><h3>Senarai Murid Terkini</h3></div>
+    <div id="recentTable"></div>
+  </div>
+</section>
+
+<section id="view-students" class="hidden">
+  <div class="heading">
+    <div>
+      <h1>Maklumat Murid</h1>
+      <p>Urus maklumat murid dan keputusan peperiksaan.</p>
+    </div>
+    <button class="btn primary" onclick="openStudent()">+ Tambah Murid</button>
+  </div>
+
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab active" data-stage="Tahap 1">Tahap 1</button>
+      <button class="tab" data-stage="Tahap 2">Tahap 2</button>
+    </div>
+    <div class="panel-header">
+      <h3 id="stageTitle">Senarai Tahap 1</h3>
+      <div class="toolbar">
+        <input id="search" placeholder="Cari nama murid...">
+        <select id="classFilter"><option value="">Semua kelas</option></select>
+      </div>
+    </div>
+    <div id="studentTable"></div>
+  </div>
+</section>
+
+<section id="view-documents" class="hidden">
+  <div class="heading">
+    <div>
+      <h1>Dokumen Peperiksaan</h1>
+      <p>Muat naik dan urus dokumen keputusan dalam format PDF.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Muat Naik PDF</h3></div>
+    <div class="panel-body">
+      <form id="documentForm" class="grid">
+        <div class="field">
+          <label>Nama Dokumen</label>
+          <input id="documentTitle" required placeholder="Contoh: Keputusan Peperiksaan">
+        </div>
+        <div class="field">
+          <label>Murid Berkaitan (Pilihan)</label>
+          <select id="documentStudent">
+            <option value="">Dokumen umum</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Pilih Fail PDF</label>
+          <input type="file" id="documentFile" accept=".pdf,application/pdf" required>
+          <small>Demo ini menerima fail PDF sehingga 1 MB setiap fail.</small>
+        </div>
+        <div class="field full">
+          <button class="btn primary" type="submit">Simpan Dokumen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header"><h3>Dokumen Disimpan</h3></div>
+    <div class="panel-body"><div class="documents" id="documentList"></div></div>
+  </div>
+</section>
+
+
+<section id="view-teacher" class="hidden">
+  <div class="heading">
+    <div>
+      <h1>Profil Peribadi Guru</h1>
+      <p>Perkenalkan diri anda melalui profil profesional ini.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h3>Maklumat Peribadi</h3>
+    </div>
+
+    <div class="panel-body">
+      <form id="teacherForm" class="grid">
+
+        <div class="field full profile-photo-field">
+          <label>Profil Guru</label>
+
+          <div class="profile-photo-wrap">
+            <img id="teacherPhotoPreview"
+                 src=""
+                 alt="Profil guru"
+                 class="teacher-photo">
+
+            <div>
+              <strong>Gambar Guru</strong>
+              <p class="photo-description">
+                Aina upload gambar dekat sini.
+              </p>
+
+              <input
+                type="file"
+                id="teacherPhoto"
+                accept="image/*">
+
+              <small>Format gambar: JPG, PNG atau WebP. Maksimum 1 MB.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Nama Penuh</label>
+          <input id="teacherName"
+                 required
+                 placeholder="Masukkan nama penuh">
+        </div>
+        <div class="field">
+          <label>Subjek Pelajaran</label>
+          <input id="teacherSubject"
+                 placeholder="Contoh: Matematik, Sains">
+        </div>
+
+        <div class="field">
+          <label>Pendidikan Terkini</label>
+          <input id="teacherExperience"
+                 placeholder="Contoh: IPG Ipoh">
+        </div>
+
+        <div class="field full">
+          <label>Biodata Ringkas</label>
+          <textarea id="teacherBio"
+                    rows="5"
+                    placeholder="Tuliskan pengenalan ringkas, minat pendidikan dan pendekatan pengajaran anda."
+                    style="width:100%;padding:12px;border:1px solid #d8dfeb;border-radius:8px;resize:vertical;font:inherit;"></textarea>
+        </div>
+
+        <div class="field full">
+          <button class="btn primary" type="submit">
+            Simpan Profil
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+</div>
+<footer>EduTrack · Sistem Pengurusan Maklumat Murid</footer>
+</main>
+</div>
+
+<div class="modal-bg hidden" id="studentModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Tambah Murid</h3>
+      <button class="btn" type="button" onclick="closeStudent()">Tutup</button>
+    </div>
+    <form id="studentForm">
+      <div class="modal-body">
+        <input type="hidden" id="studentId">
+        <div class="field">
+          <label>Nama Penuh Murid *</label>
+          <input id="studentName" required>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>Tahap *</label>
+            <select id="studentStage">
+              <option>Tahap 1</option>
+              <option>Tahap 2</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tahun *</label>
+            <select id="studentYear">
+              <option value="1">Tahun 1</option>
+              <option value="2">Tahun 2</option>
+              <option value="3">Tahun 3</option>
+              <option value="4">Tahun 4</option>
+              <option value="5">Tahun 5</option>
+              <option value="6">Tahun 6</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Kelas *</label>
+            <input id="studentClass" required placeholder="Contoh: 3 Bestari">
+          </div>
+          <div class="field">
+            <label>Skor Peperiksaan (%)</label>
+            <input id="studentScore" type="number" min="0" max="100" placeholder="0–100">
+          </div>
+        </div>
+        <div class="field">
+          <label>Nama Peperiksaan</label>
+          <input id="examName" placeholder="Contoh: Ujian Akhir Tahun">
+        </div>
+        <div class="field">
+          <label>Gambar Murid</label>
+          <input id="studentPhoto" type="file" accept="image/*">
+          <small>Gambar sehingga 300 KB untuk mengurangkan penggunaan storan.</small>
+        </div>
+        <div class="field">
+          <label>PDF Keputusan Murid (Pilihan)</label>
+          <input id="studentPdf" type="file" accept=".pdf,application/pdf">
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn" onclick="closeStudent()">Batal</button>
+        <button class="btn primary" type="submit">Simpan Murid</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const KEY = "edutrack_github_demo";
+const $ = id => document.getElementById(id);
+
+let db = loadDB();
+let currentStage = "Tahap 1";
+let photoData = "";
+let studentPdfData = null;
+
+function loadDB() {
+  try {
+    return JSON.parse(localStorage.getItem(KEY)) || {
+      teacher: {}, students: [], documents: []
+    };
+  } catch {
+    return { teacher: {}, students: [], documents: [] };
+  }
+}
+
+function saveDB() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(db));
+    return true;
+  } catch (e) {
+    alert("Storan browser penuh. Kurangkan saiz gambar atau PDF.");
+    return false;
+  }
+}
+
+function escapeHTML(value = "") {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;",
+    '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function initials(name = "Murid") {
+  return name.trim().split(/\s+/).slice(0, 2)
+    .map(word => word[0] || "").join("").toUpperCase();
+}
+
+function avatar(name) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+    <rect width="100" height="100" rx="15" fill="#e9eeff"/>
+    <text x="50" y="58" text-anchor="middle" font-size="30"
+    font-family="Arial" font-weight="bold" fill="#3157d5">${initials(name)}</text>
+    </svg>`;
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
+
+function showView(name) {
+  document.querySelectorAll("section[id^='view-']").forEach(s =>
+    s.classList.add("hidden"));
+  $("view-" + name).classList.remove("hidden");
+
+  document.querySelectorAll("[data-view]").forEach(b =>
+    b.classList.toggle("active", b.dataset.view === name));
+
+  if (name === "students") renderStudents();
+  if (name === "documents") renderDocuments();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.querySelectorAll("[data-view]").forEach(button =>
+  button.addEventListener("click", () => showView(button.dataset.view)));
+
+function renderTeacher() {
+  const t = db.teacher || {};
+  $("teacherName").value = t.name || "";
+  $("teacherRole").value = t.role || "";
+  $("schoolName").value = t.school || "";
+  $("schoolCode").value = t.code || "";
+  $("schoolSession").value = t.session || "2026";
+  $("teacherEmail").value = t.email || "";
+
+  $("schoolHeader").textContent = t.school || "Sistem Pengurusan Murid";
+  $("teacherHeader").textContent = t.name || "Profil guru belum diisi";
+  $("dashTeacher").textContent = t.name || "Belum diisi";
+  $("dashSchool").textContent = t.school || "Belum diisi";
+  $("dashRole").textContent = t.role || "-";
+  $("dashSession").textContent = t.session || "2026";
+}
+
+$("teacherForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  db.teacher = {
+    name: $("teacherName").value.trim(),
+    role: $("teacherRole").value.trim(),
+    school: $("schoolName").value.trim(),
+    code: $("schoolCode").value.trim(),
+    session: $("schoolSession").value.trim(),
+    email: $("teacherEmail").value.trim()
+  };
+
+  if (saveDB()) {
+    renderTeacher();
+    alert("Profil guru berjaya disimpan.");
+    showView("dashboard");
+  }
+});
+
+function studentRow(s) {
+  const score = s.score === "" || s.score == null
+    ? "—" : `<span class="score">${escapeHTML(s.score)}%</span>`;
+
+  return `<tr>
+    <td><div class="student">
+      <img src="${s.photo || avatar(s.name)}" alt="Gambar murid">
+      <div><strong>${escapeHTML(s.name)}</strong>
+      <small>${escapeHTML(s.exam || "Peperiksaan")}</small></div>
+    </div></td>
+    <td>${escapeHTML(s.className)}</td>
+    <td>Tahun ${escapeHTML(s.year)}</td>
+    <td>${score}</td>
+    <td>${s.pdf ? "📎 PDF" : "—"}</td>
+    <td><div class="actions">
+      <button onclick="editStudent('${s.id}')">Edit</button>
+      <button onclick="deleteStudent('${s.id}')">Padam</button>
+    </div></td>
+  </tr>`;
+}
+
+function tableHTML(list) {
+  if (!list.length) {
+    return `<div class="empty">Tiada rekod murid. Klik Tambah Murid untuk bermula.</div>`;
+  }
+  return `<div class="table-wrap"><table>
+    <thead><tr><th>Murid</th><th>Kelas</th><th>Tahun</th>
+    <th>Skor</th><th>PDF</th><th>Tindakan</th></tr></thead>
+    <tbody>${list.map(studentRow).join("")}</tbody>
+  </table></div>`;
+}
+
+function renderStudents() {
+  const query = $("search").value.toLowerCase();
+  const selectedClass = $("classFilter").value;
+
+  const allStage = db.students.filter(s => s.stage === currentStage);
+  const classes = [...new Set(allStage.map(s => s.className))].sort();
+
+  $("classFilter").innerHTML = '<option value="">Semua kelas</option>' +
+    classes.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+
+  $("classFilter").value = classes.includes(selectedClass) ? selectedClass : "";
+
+  const filtered = allStage.filter(s =>
+    s.name.toLowerCase().includes(query) &&
+    (!$("classFilter").value || s.className === $("classFilter").value));
+
+  $("stageTitle").textContent = "Senarai " + currentStage;
+  $("studentTable").innerHTML = tableHTML(filtered);
+}
+
+document.querySelectorAll("[data-stage]").forEach(button => {
+  button.addEventListener("click", () => {
+    currentStage = button.dataset.stage;
+    document.querySelectorAll("[data-stage]").forEach(b =>
+      b.classList.toggle("active", b === button));
+    renderStudents();
+  });
+});
+
+$("search").addEventListener("input", renderStudents);
+$("classFilter").addEventListener("change", renderStudents);
+
+function openStudent(id = "") {
+  $("studentForm").reset();
+  $("studentId").value = "";
+  $("modalTitle").textContent = id ? "Kemaskini Murid" : "Tambah Murid";
+  photoData = "";
+  studentPdfData = null;
+
+  $("studentStage").value = currentStage;
+  $("studentYear").value = currentStage === "Tahap 1" ? "1" : "4";
+
+  if (id) {
+    const s = db.students.find(x => x.id === id);
+    if (!s) return;
+
+    $("studentId").value = s.id;
+    $("studentName").value = s.name;
+    $("studentStage").value = s.stage;
+    $("studentYear").value = s.year;
+    $("studentClass").value = s.className;
+    $("studentScore").value = s.score ?? "";
+    $("examName").value = s.exam || "";
+    photoData = s.photo || "";
+    studentPdfData = s.pdf || null;
+  }
+
+  $("studentModal").classList.remove("hidden");
+}
+
+function closeStudent() {
+  $("studentModal").classList.add("hidden");
+}
+
+window.openStudent = openStudent;
+window.closeStudent = closeStudent;
+
+window.editStudent = id => openStudent(id);
+
+window.deleteStudent = id => {
+  const s = db.students.find(x => x.id === id);
+  if (!s || !confirm("Padam rekod " + s.name + "?")) return;
+
+  db.students = db.students.filter(x => x.id !== id);
+  saveDB();
+  refresh();
+};
+
+$("studentPhoto").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/") || file.size > 300 * 1024) {
+    alert("Pilih gambar yang sah dan bersaiz maksimum 300 KB.");
+    e.target.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => photoData = reader.result;
+  reader.readAsDataURL(file);
+});
+
+function readPDF(file, callback) {
+  if (!file) return callback(null);
+
+  if ((!file.type.includes("pdf") &&
+       !file.name.toLowerCase().endsWith(".pdf")) ||
+       file.size > 1024 * 1024) {
+    alert("Pilih fail PDF yang sah, maksimum 1 MB.");
+    return callback(false);
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => callback({
+    name: file.name,
+    data: reader.result,
+    size: file.size
+  });
+  reader.onerror = () => callback(false);
+  reader.readAsDataURL(file);
+}
+
+$("studentForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const id = $("studentId").value;
+  const existing = db.students.find(s => s.id === id);
+  const stage = $("studentStage").value;
+  const year = Number($("studentYear").value);
+  const scoreValue = $("studentScore").value;
+
+  if ((stage === "Tahap 1" && year > 3) ||
+      (stage === "Tahap 2" && year < 4)) {
+    alert("Tahun murid tidak sepadan dengan tahap yang dipilih.");
+    return;
+  }
+
+  if (scoreValue !== "" &&
+      (Number(scoreValue) < 0 || Number(scoreValue) > 100)) {
+    alert("Skor mestilah antara 0 hingga 100.");
+    return;
+  }
+
+  const file = $("studentPdf").files[0];
+
+  readPDF(file, pdf => {
+    if (pdf === false) return;
+
+    const student = {
+      id: id || uid(),
+      name: $("studentName").value.trim(),
+      stage,
+      year,
+      className: $("studentClass").value.trim(),
+      score: scoreValue === "" ? "" : Number(scoreValue),
+      exam: $("examName").value.trim(),
+      photo: photoData || (existing ? existing.photo : ""),
+      pdf: pdf || (existing ? existing.pdf : null)
+    };
+
+    if (existing) {
+      db.students = db.students.map(s => s.id === id ? student : s);
+    } else {
+      db.students.push(student);
+    }
+
+    if (saveDB()) {
+      currentStage = stage;
+      document.querySelectorAll("[data-stage]").forEach(b =>
+        b.classList.toggle("active", b.dataset.stage === stage));
+      closeStudent();
+      refresh();
+      showView("students");
+    }
+  });
+});
+
+$("documentForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const file = $("documentFile").files[0];
+  if (!file) return;
+
+  readPDF(file, pdf => {
+    if (!pdf) return;
+
+    db.documents.unshift({
+      id: uid(),
+      title: $("documentTitle").value.trim(),
+      studentId: $("documentStudent").value,
+      fileName: pdf.name,
+      data: pdf.data,
+      size: pdf.size,
+      date: new Date().toLocaleDateString("ms-MY")
+    });
+
+    if (saveDB()) {
+      e.target.reset();
+      refresh();
+      renderDocuments();
+      alert("Dokumen berjaya disimpan.");
+    }
+  });
+});
+
+function renderDocuments() {
+  const select = $("documentStudent");
+  const oldValue = select.value;
+
+  select.innerHTML = '<option value="">Dokumen umum</option>' +
+    db.students.map(s => `<option value="${s.id}">${escapeHTML(s.name)} — ${escapeHTML(s.className)}</option>`).join("");
+
+  select.value = oldValue;
+
+  const docs = db.documents || [];
+  $("documentList").innerHTML = docs.length ? docs.map(d => `
+    <div class="document">
+      <div><strong>${escapeHTML(d.title)}</strong><br>
+      <small>${escapeHTML(d.fileName)} · ${escapeHTML(d.date)}</small></div>
+      <div class="actions">
+        <button onclick="openPDF('${d.id}')">Buka</button>
+        <button onclick="deletePDF('${d.id}')">Padam</button>
+      </div>
+    </div>`).join("") :
+    '<div class="empty">Belum ada dokumen PDF.</div>';
+}
+
+window.openPDF = id => {
+  const d = db.documents.find(x => x.id === id);
+  if (!d) return;
+  const w = window.open();
+  if (!w) {
+    alert("Benarkan pop-up untuk membuka PDF.");
+    return;
+  }
+  const iframe = w.document.createElement("iframe");
+  iframe.src = d.data;
+  iframe.style.cssText = "width:100%;height:100vh;border:0";
+  w.document.body.style.margin = "0";
+  w.document.body.appendChild(iframe);
+};
+
+window.deletePDF = id => {
+  if (!confirm("Padam dokumen ini?")) return;
+  db.documents = db.documents.filter(d => d.id !== id);
+  saveDB();
+  refresh();
+};
+
+function refresh() {
+  renderTeacher();
+
+  $("total").textContent = db.students.length;
+  $("total1").textContent = db.students.filter(s => s.stage === "Tahap 1").length;
+  $("total2").textContent = db.students.filter(s => s.stage === "Tahap 2").length;
+  $("totalPdf").textContent =
+    db.documents.length + db.students.filter(s => s.pdf).length;
+
+  $("recentTable").innerHTML = tableHTML(db.students.slice(-5).reverse());
+
+  renderStudents();
+  renderDocuments();
+}
+
+$("studentModal").addEventListener("click", e => {
+  if (e.target === $("studentModal")) closeStudent();
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeStudent();
+});
+
+refresh();
+</script>
+</body>
+</html>
